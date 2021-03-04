@@ -16,15 +16,18 @@ while True:
     else:
       break
         #it may also optionally prompt the user to specify additional inputs 
-        #such as risk tolerance and/or other trading preferences, as desired and applicable.
-
-#TODO "Sorry, couldn't find any trading data for that stock symbol" 
+        #such as risk tolera
+        #nce and/or other trading preferences, as desired and applicable.
 
 #information 
 load_dotenv()
 ALPHAVANTAGE_API_KEY= os.getenv("ALPHAVANTAGE_API_KEY")
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHAVANTAGE_API_KEY}"
 response = requests.get(request_url)
+
+if "Error Message" in response.text:
+    exit("Sorry, couldn't find any trading data for that stock symbol.")
+
 parsed_response = json.loads(response.text) 
 
 from datetime import datetime
@@ -46,26 +49,24 @@ for day in market_days:
 recent_high = max(daily_highs)
 recent_low = min(daily_lows)
 
-#volume = parsed_response["Time Series (Daily)"][latest_day]["5. volume"]
-
+#creating and writing data onto csv
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 with open(csv_file_path, "w") as csv_file: 
     writer = csv.DictWriter(csv_file, fieldnames=["timestamp", "open", "high", "low", "close", "volume"])
     writer.writeheader() 
     for day in market_days:
-        #print("-----------------")
-        #print(day)
-        #print(market_days)
         daily_prices = parsed_response["Time Series (Daily)"][day]
         writer.writerow({
             "timestamp": day,
-            "open": float(daily_prices["1. open"]),
-            "high": float(daily_prices["2. high"]),
-            "low":  float(daily_prices["3. low"]),
-            "close": float(daily_prices["4. close"]),
-            "volume": int(daily_prices["5. volume"]),
+            "open": (daily_prices["1. open"]),
+            "high": (daily_prices["2. high"]),
+            "low":  (daily_prices["3. low"]),
+            "close": (daily_prices["4. close"]),
+            "volume": (daily_prices["5. volume"]),
         })
 
+#recommendation 
+recommendation = []
 
 #output 
 print("-------------------------")

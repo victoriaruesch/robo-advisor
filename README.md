@@ -1,4 +1,4 @@
-# robo-advisor
+# Robo-Advisor
 
 ## Prerequisites
 
@@ -32,7 +32,9 @@ pip install -r requirements.txt
 
 ## Setup
 
-In in the root directory of your local repository, create a new file called ".env", and update the contents of the ".env" file to specify your API Key. 
+Take a moment to [obtain an AlphaVantage API Key](https://www.alphavantage.co/).
+
+After obtaining an API key, in the root directory of your local repository, create a new file called ".env", and update the contents of the ".env" file to specify your API Key. 
 
      ALPHAVANTAGE_API_KEY="abc123"
 
@@ -44,5 +46,4 @@ Run the program script:
 
 ```py
 python app/robo_advisor.py
-
 ```
