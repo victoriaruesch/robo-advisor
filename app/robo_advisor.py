@@ -1,5 +1,6 @@
 import requests
 import json
+import csv
 import os
 from dotenv import load_dotenv
 
@@ -7,19 +8,17 @@ from dotenv import load_dotenv
 def to_usd(my_price):
     return f"${my_price:,.2f}" #> $12,000.71
 
-
 #inputting  and validating
-
-# TODO: data validation -> ONLY NUMERIC
 while True:
-    ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
-    if len(ticker)<1 or len(ticker)>5 :
-            print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
+    ticker = input("Please input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
+    if len(ticker)<1 or len(ticker)>5 or ticker.isalpha() == False:
+        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
     else:
       break
-
         #it may also optionally prompt the user to specify additional inputs 
         #such as risk tolerance and/or other trading preferences, as desired and applicable.
+
+#TODO "Sorry, couldn't find any trading data for that stock symbol" 
 
 #information 
 load_dotenv()
@@ -57,8 +56,20 @@ print("RECENT HIGH:",to_usd(recent_high))
 print("RECENT LOW:", to_usd(recent_low))
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON:" #TODO)
+print("RECOMMENDATION REASON:") #TODO
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
+
+#csv_file_path = "data/stocks.csv" # a relative filepath
+#os.path.join(os.path.dirname(__file__), "..", "data", "monthly_sales.csv"
+#
+#with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+#    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+#    writer.writeheader() # uses fieldnames set above
+#    writer.writerow({"city": "New York", "name": "Yankees"})
+#    writer.writerow({"city": "New York", "name": "Mets"})
+#    writer.writerow({"city": "Boston", "name": "Red Sox"})
+#    writer.writerow({"city": "New Haven", "name": "Ravens"})
 
