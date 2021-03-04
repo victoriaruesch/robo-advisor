@@ -9,20 +9,17 @@ def to_usd(my_price):
 
 
 #inputting  and validating
-#while True:
-ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
-#    if len(ticker)<1 or len(ticker)>5:
-#        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
-#    if ticker == "DONE":
-#        break
+
+# TODO: data validation -> ONLY NUMERIC
+while True:
+    ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
+    if len(ticker)<1 or len(ticker)>5 :
+            print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
+    else:
+      break
+
         #it may also optionally prompt the user to specify additional inputs 
         #such as risk tolerance and/or other trading preferences, as desired and applicable.
-#    else:
-#        if 1<=len(ticker)<=5:
-#          selected_tickers.append(str(ticker))
-#print(selected_tickers)
-
-
 
 #information 
 load_dotenv()
@@ -60,7 +57,8 @@ print("RECENT HIGH:",to_usd(recent_high))
 print("RECENT LOW:", to_usd(recent_low))
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print("RECOMMENDATION REASON:" #TODO)
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
