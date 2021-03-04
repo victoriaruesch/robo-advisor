@@ -37,6 +37,16 @@ now = datetime.now()
 market_days = list(parsed_response["Time Series (Daily)"])
 latest_day = market_days[0]
 
+daily_highs = []
+daily_lows = []
+for day in market_days:
+    daily_high = parsed_response["Time Series (Daily)"][day]["2. high"]
+    daily_highs.append(float(daily_high))
+    daily_low = parsed_response["Time Series (Daily)"][day]["3. low"]
+    daily_lows.append(float(daily_low))
+recent_high = max(daily_highs)
+recent_low = min(daily_lows)
+
 #output 
 print("-------------------------")
 print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"])
@@ -46,8 +56,8 @@ print("REQUEST AT:", now.strftime("%Y-%m-%d %H:%M %p"))
 print("-------------------------")
 print("LATEST DAY:", latest_day)
 print("LATEST CLOSE:", to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["4. close"])))
-print("RECENT HIGH:",to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["2. high"])))
-print("RECENT LOW:",to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["3. low"])))
+print("RECENT HIGH:",to_usd(recent_high))
+print("RECENT LOW:", to_usd(recent_low))
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON: TODO")
