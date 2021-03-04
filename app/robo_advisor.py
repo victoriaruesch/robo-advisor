@@ -3,34 +3,56 @@ import json
 import os
 from dotenv import load_dotenv
 
+#formatting
+def to_usd(my_price):
+    """
+    Converts a numeric value to usd-formatted string, for printing and display purposes.
+
+    Param: my_price (int or float) like 4000.444444
+
+    Example: to_usd(4000.444444)
+
+    Returns: $4,000.44
+    """
+    return f"${my_price:,.2f}" #> $12,000.71
+
+
 #inputting  and validating
-while True:
-    ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
-    if len(ticker)<1 or len(ticker)>5:
-        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
-    if ticker == "DONE":
-        break
+#while True:
+#    ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
+#    if len(ticker)<1 or len(ticker)>5:
+#        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
+#    if ticker == "DONE":
+#        break
         #it may also optionally prompt the user to specify additional inputs 
         #such as risk tolerance and/or other trading preferences, as desired and applicable.
-    else:
-        if 1<=len(ticker)<=5:
-          selected_tickers.append(str(ticker))
+#    else:
+#        if 1<=len(ticker)<=5:
+#          selected_tickers.append(str(ticker))
+#print(selected_tickers)
 
-print(selected_tickers)
 
-#infromation output
+#information 
 load_dotenv()
 ALPHAVANTAGE_API_KEY= os.getenv("ALPHAVANTAGE_API_KEY")
-request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHAVANTAGE_API_KEY}"
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSLA&apikey={ALPHAVANTAGE_API_KEY}"
+response = requests.get(request_url)
+parsed_response = json.loads(response.text) 
 
+#date and time 
+from datetime import datetime
+now = datetime.now()
+
+#output 
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"])
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print("REQUEST AT:", now.strftime("%Y-%m-%d %H:%M %p"))
 print("-------------------------")
-print("LATEST DAY: 2018-02-20")
-print("LATEST CLOSE: $100,000.00")
+latest_day = parsed_response["Meta Data"]["3. Last Refreshed"]
+print("LATEST DAY:", latest_day)
+print("LATEST CLOSE:", to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["4. close"])))
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
 print("-------------------------")

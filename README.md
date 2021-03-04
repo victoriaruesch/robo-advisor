@@ -37,3 +37,12 @@ In in the root directory of your local repository, create a new file called ".en
      ALPHAVANTAGE_API_KEY="abc123"
 
 > NOTE: the ".env" file is usually the place for passing configuration options and secret credentials, so as a best practice we don't upload this file to version control (which is accomplished via a corresponding entry in the [.gitignore](/.gitignore) file)
+
+## Usage
+
+Run the program script:
+
+```py
+python app/robo_advisor.py
+
+```
