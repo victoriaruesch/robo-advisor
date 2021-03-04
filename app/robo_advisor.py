@@ -15,9 +15,7 @@ while True:
         print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
     else:
       break
-        #it may also optionally prompt the user to specify additional inputs 
-        #such as risk tolera
-        #nce and/or other trading preferences, as desired and applicable.
+
 
 #information 
 load_dotenv()
@@ -67,6 +65,19 @@ with open(csv_file_path, "w") as csv_file:
 
 #recommendation 
 recommendation = []
+risk_tolerance = input("Please input wether you have a low, medium, or high risk tolerance.")
+low_risk = recent_high * .50
+med_risk = recent_high * .70
+high_risk = recent_high * .90
+if risk_tolerance == "low" and latest_close >= low_risk:
+  recommendation.append("SELL")
+elif risk_tolerance == "medium" and latest_close >= med_risk:
+  recommendation.append("SELL")
+elif risk_tolerance == "high" and latest_close >= high_risk:
+  recommendation.append("SELL")
+else:
+  recommendation.append("BUY")
+
 
 #output 
 print("-------------------------")
@@ -80,8 +91,8 @@ print("LATEST CLOSE:", to_usd(latest_close))
 print("RECENT HIGH:",to_usd(recent_high))
 print("RECENT LOW:", to_usd(recent_low))
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON:") #TODO
+print("RECOMMENDATION:", recommendation)
+print("RECOMMENDATION REASON:", ) #TODO
 print("-------------------------")
 print("WRITING DATA TO CSV:", csv_file_path, "...")
 print("-------------------------")
