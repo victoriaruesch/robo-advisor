@@ -32,26 +32,40 @@ now = datetime.now()
 
 market_days = list(parsed_response["Time Series (Daily)"])
 latest_day = market_days[0]
+latest_close = float(parsed_response["Time Series (Daily)"][latest_day]["4. close"])
 
 daily_highs = []
 daily_lows = []
+
 for day in market_days:
     daily_high = parsed_response["Time Series (Daily)"][day]["2. high"]
     daily_highs.append(float(daily_high))
     daily_low = parsed_response["Time Series (Daily)"][day]["3. low"]
     daily_lows.append(float(daily_low))
+
 recent_high = max(daily_highs)
 recent_low = min(daily_lows)
 
+#volume = parsed_response["Time Series (Daily)"][latest_day]["5. volume"]
 
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
-with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
-    writer.writeheader() # uses fieldnames set above
-    writer.writerow({"city": "New York", "name": "Yankees"})
-    writer.writerow({"city": "New York", "name": "Mets"})
-    writer.writerow({"city": "Boston", "name": "Red Sox"})
-    writer.writerow({"city": "New Haven", "name": "Ravens"})
+with open(csv_file_path, "w") as csv_file: 
+    writer = csv.DictWriter(csv_file, fieldnames=["timestamp", "open", "high", "low", "close", "volume"])
+    writer.writeheader() 
+    for day in market_days:
+        #print("-----------------")
+        #print(day)
+        #print(market_days)
+        daily_prices = parsed_response["Time Series (Daily)"][day]
+        writer.writerow({
+            "timestamp": day,
+            "open": float(daily_prices["1. open"]),
+            "high": float(daily_prices["2. high"]),
+            "low":  float(daily_prices["3. low"]),
+            "close": float(daily_prices["4. close"]),
+            "volume": int(daily_prices["5. volume"]),
+        })
+
 
 #output 
 print("-------------------------")
@@ -61,7 +75,7 @@ print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT:", now.strftime("%Y-%m-%d %H:%M %p"))
 print("-------------------------")
 print("LATEST DAY:", latest_day)
-print("LATEST CLOSE:", to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["4. close"])))
+print("LATEST CLOSE:", to_usd(latest_close))
 print("RECENT HIGH:",to_usd(recent_high))
 print("RECENT LOW:", to_usd(recent_low))
 print("-------------------------")
