@@ -5,21 +5,12 @@ from dotenv import load_dotenv
 
 #formatting
 def to_usd(my_price):
-    """
-    Converts a numeric value to usd-formatted string, for printing and display purposes.
-
-    Param: my_price (int or float) like 4000.444444
-
-    Example: to_usd(4000.444444)
-
-    Returns: $4,000.44
-    """
     return f"${my_price:,.2f}" #> $12,000.71
 
 
 #inputting  and validating
 #while True:
-#    ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
+ticker = input("Please input input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
 #    if len(ticker)<1 or len(ticker)>5:
 #        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
 #    if ticker == "DONE":
@@ -32,16 +23,19 @@ def to_usd(my_price):
 #print(selected_tickers)
 
 
+
 #information 
 load_dotenv()
 ALPHAVANTAGE_API_KEY= os.getenv("ALPHAVANTAGE_API_KEY")
-request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSLA&apikey={ALPHAVANTAGE_API_KEY}"
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHAVANTAGE_API_KEY}"
 response = requests.get(request_url)
 parsed_response = json.loads(response.text) 
 
-#date and time 
 from datetime import datetime
-now = datetime.now()
+now = datetime.now() 
+
+market_days = list(parsed_response["Time Series (Daily)"])
+latest_day = market_days[0]
 
 #output 
 print("-------------------------")
@@ -50,11 +44,10 @@ print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT:", now.strftime("%Y-%m-%d %H:%M %p"))
 print("-------------------------")
-latest_day = parsed_response["Meta Data"]["3. Last Refreshed"]
 print("LATEST DAY:", latest_day)
 print("LATEST CLOSE:", to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["4. close"])))
-print("RECENT HIGH: $101,000.00")
-print("RECENT LOW: $99,000.00")
+print("RECENT HIGH:",to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["2. high"])))
+print("RECENT LOW:",to_usd(float(parsed_response["Time Series (Daily)"][latest_day]["3. low"])))
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON: TODO")
