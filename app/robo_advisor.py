@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 #formatting
 def to_usd(my_price):
     return f"${my_price:,.2f}" #> $12,000.71
-
+ 
 #inputting  and validating
 while True:
     ticker = input("Please input one stock or cryptocurrency symbol (between 1 and 5 non-numeric characters).")
@@ -43,9 +43,19 @@ for day in market_days:
 recent_high = max(daily_highs)
 recent_low = min(daily_lows)
 
+
+csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
+with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer.writeheader() # uses fieldnames set above
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
+
 #output 
 print("-------------------------")
-print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"])
+print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"].upper())
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT:", now.strftime("%Y-%m-%d %H:%M %p"))
@@ -58,18 +68,7 @@ print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON:") #TODO
 print("-------------------------")
+print("WRITING DATA TO CSV:", csv_file_path, "...")
+print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
-
-
-#csv_file_path = "data/stocks.csv" # a relative filepath
-#os.path.join(os.path.dirname(__file__), "..", "data", "monthly_sales.csv"
-#
-#with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-#    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
-#    writer.writeheader() # uses fieldnames set above
-#    writer.writerow({"city": "New York", "name": "Yankees"})
-#    writer.writerow({"city": "New York", "name": "Mets"})
-#    writer.writerow({"city": "Boston", "name": "Red Sox"})
-#    writer.writerow({"city": "New Haven", "name": "Ravens"})
-
