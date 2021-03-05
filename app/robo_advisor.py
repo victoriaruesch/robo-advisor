@@ -78,7 +78,10 @@ elif risk_tolerance == "high" and latest_close >= high_risk:
 else:
   recommendation.append("BUY")
 
-
+#reason
+why_buy = "Condier a buy of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, there is a lucrative difference between the stock's latest closing price and recent high." 
+why_sell = "Condier a sell of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
+ 
 #output 
 print("-------------------------")
 print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"].upper())
@@ -92,7 +95,7 @@ print("RECENT HIGH:",to_usd(recent_high))
 print("RECENT LOW:", to_usd(recent_low))
 print("-------------------------")
 print("RECOMMENDATION:", recommendation)
-print("RECOMMENDATION REASON:", ) #TODO
+print("RECOMMENDATION REASON:",why_buy if recommendation == "BUY" else why_sell)
 print("-------------------------")
 print("WRITING DATA TO CSV:", csv_file_path, "...")
 print("-------------------------")
