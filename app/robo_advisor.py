@@ -85,7 +85,6 @@ else:
 why_buy = "Condier a buy of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, there is a lucrative difference between the stock's latest closing price and recent high." 
 why_sell = "Do not buy " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
  
-
 #output 
 print("-------------------------")
 print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"].upper())
