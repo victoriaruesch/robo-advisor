@@ -3,6 +3,10 @@ import json
 import csv
 import os
 from dotenv import load_dotenv
+from pandas import read_csv
+import datetime
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 #formatting
 def to_usd(my_price):
@@ -81,6 +85,7 @@ else:
 why_buy = "Condier a buy of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, there is a lucrative difference between the stock's latest closing price and recent high." 
 why_sell = "Do not buy " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
  
+
 #output 
 print("-------------------------")
 print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"].upper())
@@ -100,3 +105,11 @@ print("WRITING DATA TO CSV:", csv_file_path, "...")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
+#further exploration challenge
+prices_df = read_csv(csv_file_path)
+prices_df.sort_values(by="timestamp", ascending=True, inplace=True)
+line_graph = sns.lineplot(data= prices_df, x= "timestamp", y= "close")
+line_graph.set(xlabel = "Date", ylabel = "Price ($)", title = ticker.upper() + " Price Over Time")
+plt.xticks(rotation=90, fontsize = 5)
+plt.show()
