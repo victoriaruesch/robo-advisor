@@ -106,7 +106,7 @@ print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
-#further exploration challenge
+#further exploration challenge: prices over time plot
 prices_df = read_csv(csv_file_path)
 prices_df.sort_values(by="timestamp", ascending=True, inplace=True)
 line_graph = sns.lineplot(data= prices_df, x= "timestamp", y= "close")

@@ -1,9 +1,12 @@
 # Robo-Advisor
 
+Command-line application that allows users to specify a stock in order to get relevant data, a buy recommendation based on user preferences, and stock price data visualization. 
+
 ## Prerequisites
 
   + Anaconda 3.7+
   + Python 3.7+
+  + Pip
 
 ## Installation
 
@@ -32,7 +35,7 @@ pip install -r requirements.txt
 
 ## Setup
 
-Take a moment to [obtain an AlphaVantage API Key](https://www.alphavantage.co/).
+This application issues requests to the AlphaVantage Stock Market API in order to provide stock data and recommendations. Take a moment to [obtain an AlphaVantage API Key](https://www.alphavantage.co/).
 
 After obtaining an API key, in the root directory of your local repository, create a new file called ".env", and update the contents of the ".env" file to specify your API Key. 
 
@@ -42,7 +45,7 @@ After obtaining an API key, in the root directory of your local repository, crea
 
 ## Usage
 
-Run the program script:
+Run the robo-advisor script:
 
 ```py
 python app/robo_advisor.py
