@@ -63,30 +63,30 @@ with open(csv_file_path, "w") as csv_file:
         })
 
 #recommendation 
-recommendation = []
+recommendation = ""
 risk_tolerance = input("Please input wether you have a low, medium, or high risk tolerance.")
 low_risk = recent_high * .50
 med_risk = recent_high * .70
 high_risk = recent_high * .90
 if risk_tolerance == "low" and latest_close >= low_risk:
-  recommendation.append("DON'T BUY")
+  recommendation = "DON'T BUY"
 elif risk_tolerance == "medium" and latest_close >= med_risk:
-  recommendation.append("DON'T BUY")
+  recommendation = "DON'T BUY" 
 elif risk_tolerance == "high" and latest_close >= high_risk:
-  recommendation.append("DON'T BUY")
+  recommendation = "DON'T BUY"
 else:
-  recommendation.append("BUY")
+  recommendation = "BUY"
 
 #reason
 why_buy = "Condier a buy of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, there is a lucrative difference between the stock's latest closing price and recent high." 
-why_sell = "Do not buy" + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
+why_sell = "Do not buy " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
  
 #output 
 print("-------------------------")
 print("SELECTED SYMBOL:", parsed_response["Meta Data"]["2. Symbol"].upper())
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT:", now.strftime("%Y-%m-%d %H:%M %p"))
+print("REQUEST AT:", now.strftime("%Y-%m-%d %I:%M %p"))
 print("-------------------------")
 print("LATEST DAY:", latest_day)
 print("LATEST CLOSE:", to_usd(latest_close))
