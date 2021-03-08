@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from pandas import read_csv
 import datetime
 import seaborn as sns
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 #formatting
 def to_usd(my_price):
