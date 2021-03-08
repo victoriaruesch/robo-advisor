@@ -16,7 +16,6 @@ while True:
     else:
       break
 
-
 #information 
 load_dotenv()
 ALPHAVANTAGE_API_KEY= os.getenv("ALPHAVANTAGE_API_KEY")
@@ -70,17 +69,17 @@ low_risk = recent_high * .50
 med_risk = recent_high * .70
 high_risk = recent_high * .90
 if risk_tolerance == "low" and latest_close >= low_risk:
-  recommendation.append("SELL")
+  recommendation.append("DON'T BUY")
 elif risk_tolerance == "medium" and latest_close >= med_risk:
-  recommendation.append("SELL")
+  recommendation.append("DON'T BUY")
 elif risk_tolerance == "high" and latest_close >= high_risk:
-  recommendation.append("SELL")
+  recommendation.append("DON'T BUY")
 else:
   recommendation.append("BUY")
 
 #reason
 why_buy = "Condier a buy of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, there is a lucrative difference between the stock's latest closing price and recent high." 
-why_sell = "Condier a sell of " + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
+why_sell = "Do not buy" + ticker.upper() + " stock. After taking into consdieration the user's " + risk_tolerance + " risk tolerance, the stock's latest closing price is too high compared to its recent high."     
  
 #output 
 print("-------------------------")
